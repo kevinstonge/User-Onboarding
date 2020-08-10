@@ -10,6 +10,11 @@ form {
   margin: 1rem auto;
   padding: 1rem;
   max-width: 20rem;
+  h3 {
+    font-size: 1.2rem;
+    text-align: center;
+    color: $em1;
+  }
   .formSection {
     margin-top: 1rem;
     .formRow {
