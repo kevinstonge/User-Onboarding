@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import * as Yup from "yup";
 import "./Form.scss";
 
@@ -25,26 +26,36 @@ const Form = (props) => {
   );
   const [errors, setErrors] = useState(empty);
   const [values, setValues] = useState(empty);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+  useEffect(() => {
+    formSchema.isValid(values).then((valid) => {
+      setButtonDisabled(!valid);
+    });
+  }, [values, formSchema]);
+  const validateInput = (schema, id, value) => {
+    Yup.reach(schema, id)
+      .validate(value)
+      .then(() => {
+        setErrors({ ...errors, [id]: "" });
+      })
+      .catch((err) => {
+        setErrors({ ...errors, [id]: err.errors[0] });
+      });
+  };
   const handleInput = (e) => {
     let { id, value } = e.target;
     if (e.target.type === "checkbox") {
       value = e.target.checked;
     }
     setValues({ ...values, [id]: value });
-    Yup.reach(formSchema, id)
-      .validate(value)
-      .then(() => {
-        setErrors({
-          ...errors,
-          [id]: "",
-        });
-      })
-      .catch((err) => {
-        setErrors({
-          ...errors,
-          [id]: err.errors[0],
-        });
-      });
+    validateInput(formSchema, id, value);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("submit");
+    axios
+      .post("https://reqres.in/api/users", values)
+      .then((r) => props.addMember(r.data));
   };
   return (
     <form>
@@ -70,14 +81,19 @@ const Form = (props) => {
                 onChange={(e) => handleInput(e)}
               />
             </div>
-            {errors[k].length > 0 ? (
-              <p className="formError" id={`${k}-error`}>
-                {errors[k]}
-              </p>
-            ) : null}
+            <p className="formError" id={`${k}-error`}>
+              {errors[k]}
+            </p>
           </div>
         );
       })}
+      <button
+        type="submit"
+        onClick={(e) => handleSubmit(e)}
+        disabled={buttonDisabled}
+      >
+        submit
+      </button>
     </form>
   );
 };
