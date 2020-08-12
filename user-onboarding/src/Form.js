@@ -1,100 +1,54 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import axios from "axios";
+import { yupResolver } from "@hookform/resolvers";
 import * as Yup from "yup";
+import { useForm } from "react-hook-form";
 import "./Form.scss";
 
+const formSchema = Yup.object().shape({
+  name: Yup.string().required("please enter your name"),
+  email: Yup.string()
+    .email("please enter a valid email address")
+    .required("an email address is required"),
+  password: Yup.string().min(
+    5,
+    "password must be at least five characters long"
+  ),
+  terms: Yup.boolean().oneOf([true], "you must agree to the terms of service"),
+});
+
 const Form = (props) => {
-  const formSchema = Yup.object().shape({
-    name: Yup.string().required("please enter your name"),
-    email: Yup.string()
-      .email("please enter a valid email address")
-      .required("an email address is required"),
-    password: Yup.string().min(
-      5,
-      "password must be at least five characters long"
-    ),
-    "I agree to the terms of service": Yup.boolean().oneOf(
-      [true],
-      "you must agree to the terms of service"
-    ),
+  const { register, handleSubmit, errors, reset } = useForm({
+    resolver: yupResolver(formSchema),
   });
-  const empty = Object.assign(
-    {},
-    ...Object.keys(formSchema.fields).map((k) => {
-      return { [k]: "" };
-    })
-  );
-  const [errors, setErrors] = useState(empty);
-  const [values, setValues] = useState(empty);
-  const [buttonDisabled, setButtonDisabled] = useState(false);
-  useEffect(() => {
-    formSchema.isValid(values).then((valid) => {
-      setButtonDisabled(!valid);
-    });
-  }, [values, formSchema]);
-  const validateInput = (schema, id, value) => {
-    Yup.reach(schema, id)
-      .validate(value)
-      .then(() => {
-        setErrors({ ...errors, [id]: "" });
-      })
-      .catch((err) => {
-        setErrors({ ...errors, [id]: err.errors[0] });
-      });
-  };
-  const handleInput = (e) => {
-    let { id, value } = e.target;
-    if (e.target.type === "checkbox") {
-      value = e.target.checked;
-    }
-    setValues({ ...values, [id]: value });
-    validateInput(formSchema, id, value);
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
+
+  const onSubmit = (data) => {
     console.log("submit");
-    axios.post("https://reqres.in/api/users", values).then((r) => {
+    axios.post("https://reqres.in/api/users", data).then((r) => {
+      reset({});
       props.addMember(r.data);
-      setValues(empty);
     });
   };
   return (
-    <form>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <h3>New User Information</h3>
-      {Object.keys(formSchema.fields).map((k) => {
-        let inputType = "text";
-        if (k === "password") {
-          inputType = "password";
-        }
-        if (formSchema.fields[k].type === "boolean") {
-          inputType = "checkbox";
-        }
+      <label htmlFor="name">name:</label>
+      <input type="text" name="name" ref={register} />
+      <p className="errors">{errors.name?.message}</p>
 
-        return (
-          <div className="formSection" key={`${k}-formSection`}>
-            <div className="formRow">
-              <label htmlFor={k}>{k}</label>
-              <input
-                type={inputType}
-                id={k}
-                value={values[k]}
-                checked={values[k]}
-                onChange={(e) => handleInput(e)}
-              />
-            </div>
-            <p className="formError" id={`${k}-error`}>
-              {errors[k]}
-            </p>
-          </div>
-        );
-      })}
-      <button
-        type="submit"
-        onClick={(e) => handleSubmit(e)}
-        disabled={buttonDisabled}
-      >
-        submit
-      </button>
+      <label htmlFor="email">email:</label>
+      <input type="email" name="email" ref={register} />
+      <p className="errors">{errors.email?.message}</p>
+
+      <label htmlFor="password">password:</label>
+      <input type="password" name="password" ref={register} />
+      <p className="errors">{errors.password?.message}</p>
+
+      <input type="checkbox" name="terms" ref={register} />
+      <label htmlFor="terms">I agree to the terms of service</label>
+      <p className="errors">{errors.terms?.message}</p>
+
+      <button type="submit">submit</button>
     </form>
   );
 };
