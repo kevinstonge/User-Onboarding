@@ -53,9 +53,10 @@ const Form = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("submit");
-    axios
-      .post("https://reqres.in/api/users", values)
-      .then((r) => props.addMember(r.data));
+    axios.post("https://reqres.in/api/users", values).then((r) => {
+      props.addMember(r.data);
+      setValues(empty);
+    });
   };
   return (
     <form>
