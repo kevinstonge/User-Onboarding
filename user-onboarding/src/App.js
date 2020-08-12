@@ -3,7 +3,10 @@ import "./App.scss";
 import Form from "./Form";
 
 function App() {
-  const [members, setMembers] = useState([]);
+  const [members, setMembers] = useState([
+    { name: "John Doe", email: "johndoe@gmail.com", password: "password" },
+    { name: "Jane Doe", email: "janedoe@gmail.com", password: "password" },
+  ]);
   const addMember = (member) => {
     setMembers([...members, member]);
   };
@@ -13,8 +16,13 @@ function App() {
         <Form addMember={addMember} />
       </div>
       <div className="membersContainer">
+        <h2>Members</h2>
         {members.map((m) => (
-          <p>{m.name}</p>
+          <div className="member" key={`${m.email}`}>
+            <p>
+              {m.name} ({m.email})
+            </p>
+          </div>
         ))}
       </div>
     </div>
