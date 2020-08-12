@@ -33,19 +33,21 @@ const Form = (props) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <h3>New User Information</h3>
       <label htmlFor="name">name:</label>
-      <input type="text" name="name" ref={register} />
+      <input type="text" id="name" name="name" ref={register} />
       <p className="errors">{errors.name?.message}</p>
 
       <label htmlFor="email">email:</label>
-      <input type="email" name="email" ref={register} />
+      <input type="email" id="email" name="email" ref={register} />
       <p className="errors">{errors.email?.message}</p>
 
       <label htmlFor="password">password:</label>
-      <input type="password" name="password" ref={register} />
+      <input type="password" id="password" name="password" ref={register} />
       <p className="errors">{errors.password?.message}</p>
 
-      <input type="checkbox" name="terms" ref={register} />
-      <label htmlFor="terms">I agree to the terms of service</label>
+      <label htmlFor="terms">
+        <input type="checkbox" id="terms" name="terms" ref={register} />I agree
+        to the terms of service
+      </label>
       <p className="errors">{errors.terms?.message}</p>
 
       <button type="submit">submit</button>

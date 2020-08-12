@@ -16,14 +16,11 @@ form {
     text-align: center;
     color: $em1;
   }
-
+  label {
+    margin-top: 0.5rem;
+  }
   .errors {
     text-align: right;
     color: $em2;
-  }
-  input {
-    margin-left: 0.5rem;
-    flex: 1;
-    -webkit-flex: 1;
   }
 }
