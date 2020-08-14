@@ -33,20 +33,38 @@ const Form = (props) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <h3>New User Information</h3>
       <label htmlFor="name">name:</label>
-      <input type="text" id="name" name="name" ref={register} />
+      <input type="text" id="name" name="name" ref={register} datay-cy="name" />
       <p className="errors">{errors.name?.message}</p>
 
       <label htmlFor="email">email:</label>
-      <input type="email" id="email" name="email" ref={register} />
+      <input
+        type="email"
+        id="email"
+        name="email"
+        ref={register}
+        datay-cy="email"
+      />
       <p className="errors">{errors.email?.message}</p>
 
       <label htmlFor="password">password:</label>
-      <input type="password" id="password" name="password" ref={register} />
+      <input
+        type="password"
+        id="password"
+        name="password"
+        ref={register}
+        datay-cy="password"
+      />
       <p className="errors">{errors.password?.message}</p>
 
       <label htmlFor="terms">
-        <input type="checkbox" id="terms" name="terms" ref={register} />I agree
-        to the terms of service
+        <input
+          type="checkbox"
+          id="terms"
+          name="terms"
+          ref={register}
+          datay-cy="terms"
+        />
+        I agree to the terms of service
       </label>
       <p className="errors">{errors.terms?.message}</p>
 
