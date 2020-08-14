@@ -33,7 +33,7 @@ const Form = (props) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <h3>New User Information</h3>
       <label htmlFor="name">name:</label>
-      <input type="text" id="name" name="name" ref={register} datay-cy="name" />
+      <input type="text" id="name" name="name" ref={register} data-cy="name" />
       <p className="errors">{errors.name?.message}</p>
 
       <label htmlFor="email">email:</label>
@@ -42,7 +42,7 @@ const Form = (props) => {
         id="email"
         name="email"
         ref={register}
-        datay-cy="email"
+        data-cy="email"
       />
       <p className="errors">{errors.email?.message}</p>
 
@@ -52,7 +52,7 @@ const Form = (props) => {
         id="password"
         name="password"
         ref={register}
-        datay-cy="password"
+        data-cy="password"
       />
       <p className="errors">{errors.password?.message}</p>
 
@@ -62,7 +62,7 @@ const Form = (props) => {
           id="terms"
           name="terms"
           ref={register}
-          datay-cy="terms"
+          data-cy="terms"
         />
         I agree to the terms of service
       </label>
