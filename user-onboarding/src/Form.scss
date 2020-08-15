@@ -1,0 +1,26 @@
+@import "./base.scss";
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+  align-content: center;
+  background-color: $bg2;
+  box-shadow: 1px 1px 1px 0 black, -1px -1px 1px 0 $fg1;
+  margin: 1rem auto;
+  padding: 1rem;
+  max-width: 20rem;
+  h3 {
+    font-size: 1.2rem;
+    text-align: center;
+    color: $em1;
+  }
+  label {
+    margin-top: 0.5rem;
+  }
+  .errors {
+    text-align: right;
+    color: $em2;
+  }
+}

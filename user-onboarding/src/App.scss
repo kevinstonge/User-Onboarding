@@ -1,0 +1,17 @@
+@import "./base.scss";
+html {
+  background-color: $bg1;
+  color: $fg1;
+}
+h2 {
+  margin: 0 auto;
+  text-align: center;
+  font-size: 1.3rem;
+}
+.member {
+  margin: 0.5rem auto;
+  padding: 0.5rem;
+  background-color: $bg2;
+  max-width: 30rem;
+  box-shadow: 1px 1px 1px 0 black, -1px -1px 1px 0 $fg1;
+}
