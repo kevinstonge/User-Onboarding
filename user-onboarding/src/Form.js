@@ -68,7 +68,9 @@ const Form = (props) => {
       </label>
       <p className="errors">{errors.terms?.message}</p>
 
-      <button type="submit">submit</button>
+      <button type="submit" data-cy="submit">
+        submit
+      </button>
     </form>
   );
 };

@@ -11,7 +11,11 @@ describe("testing form input", () => {
       .type("myPassword")
       .should("have.value", "myPassword");
     cy.get("[data-cy='terms']").check().should("be.checked");
-    cy.get("[data-cy='submit']").click();
+    cy.get("[data-cy=submit]")
+      .click()
+      .then(() => {
+        cy.get("[data-cy=memberList]").should("contain", "myname@gmail.com");
+      });
   });
 });
 //

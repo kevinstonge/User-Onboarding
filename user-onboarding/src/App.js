@@ -15,7 +15,7 @@ function App() {
       <div className="formContainer">
         <Form addMember={addMember} />
       </div>
-      <div className="membersContainer">
+      <div className="membersContainer" data-cy="memberList">
         <h2>Members</h2>
         {members.map((m) => (
           <div className="member" key={`${m.email}`}>
